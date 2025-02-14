@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Card</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffebee; /* Soft pink background */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+
+        .card-container {
+            perspective: 1000px; /* Enables 3D perspective */
+            width: 100%; /* Full width for responsiveness */
+            max-width: 400px; /* Maximum width for larger screens */
+        }
+
+        .card {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card-cover, .card-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden; /* Hides the back side */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px; /* Added padding for better spacing */
+            box-sizing: border-box; /* Ensures padding is included in width/height */
+        }
+
+        .card-cover {
+            background-color: #FF6F61; /* Cover color */
+            color: white;
+        }
+
+        .card-content {
+            background-color: #fff; /* Content color */
+            color: #1d3557;
+            transform: rotateY(180deg); /* Rotate to hide initially */
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.6s ease-in-out; /* Fade-in effect */
+        }
+
+        button {
+            background-color: #f1faee;
+            border: none;
+            border-radius: 5px;
+            color: #457b9d;
+            cursor: pointer;
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover */
+        }
+
+        button:hover {
+            background-color: #a8dadc;
+            transform: scale(1.05); /* Scale effect on hover */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .heart-image {
+            width: 60px; /* Adjusted size for better visibility */
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .card {
+                height: 250px; /* Increased height for mobile */
+            }
+
+            .heart-image {
+                width: 80px; /* Larger heart image on mobile */
+            }
+
+            button {
+                width: 100%; /* Full-width buttons on mobile */
+                padding: 12px; /* Increased padding for better touch targets */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card" id="card">
+            <div class="card-cover">
+                <h1>Happy Valentine's Day</h1>
+                <img src="https://static.vecteezy.com/system/resources/previews/018/842/695/large_2x/red-heart-shape-icon-like-or-love-symbol-for-valentine-s-day-3d-render-illustration-free-png.png" alt="Heart" class="heart-image">
+                <button id="revealButton">Open Card</button>
+            </div>
+            <div class="card-content hidden">
+                <p>I Love You Bugu! 💖</p>
+                <button id="closeButton">Close Card</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('revealButton').addEventListener('click', function() {
+            const card = document.getElementById('card');
+            const cardContent = document.querySelector('.card-content');
+            card.style.transform = 'rotateY(180deg)'; // Flip the card
+            setTimeout(() => {
+                cardContent.classList.remove('hidden'); // Show the content after flip
+                cardContent.style.opacity = '1'; // Fade in the content
+            }, 300); // Delay to match the flip animation duration
+        });
+        
+        document.getElementById('closeButton').addEventListener('click', function() {
+            const card = document.getElementById('card');
+            const cardContent = document.querySelector('.card-content');
+            card.style.transform = 'rotateY(0deg)'; // Flip back the card
+            cardContent.style.opacity = '0'; // Fade out the content
+            setTimeout(() => {
+                cardContent.classList.add('hidden'); // Hide the content after fade out
+            }, 300); // Delay to match the fade out duration
+        });
+    </script>
